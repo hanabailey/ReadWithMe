@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useState } from 'react';
 import './Login.css'
+import bookIcon from '../../../public/img/Vector.png';
 
 
 function LogIn() {
@@ -20,7 +21,7 @@ function LogIn() {
   
   return (
     <>
-    <Image className="icon" src="/images/Vector.png" alt="My Image" width={100} height={100} />
+    <div className='icon'><Image src={bookIcon} alt="My Image" width={30} height={30}/></div>
     <div className='loginFrame'>
       <h1>Log In</h1>
       <div className='form-group'>

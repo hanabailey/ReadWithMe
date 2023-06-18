@@ -1,7 +1,19 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Dancing_Script, Open_Sans } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
+const dancing = Dancing_Script({
+  subsets: ['latin'],
+  variable: '--font-dancing',
+  display: 'swap'
+})
+
+const open_sans = Open_Sans({
+  subsets: ['latin'],
+  variable: '--font-oepn_sans',
+  display: 'swap'
+})
+
 
 export const metadata = {
   title: 'Read With me',
@@ -15,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${dancing.variable}`}>{children}</body>
     </html>
   )
 }

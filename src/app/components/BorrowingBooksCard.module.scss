@@ -1,0 +1,21 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.bookImg{
+  justify-content: center;
+  // width: 100px;
+  // height: 70px;
+  background-color: black;
+  padding: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  flex-basis: 100px;
+  
+}
+

@@ -1,19 +1,69 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import HomeHeader from "@/app/components/HomeHeader";
-import Image from "next/image";
+import BorrowingBooksCard from "../components/BorrowingBooksCard";
+import styles from "@/app/home/home.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import ModalForBorrowing from "@/app/components/ModalForBorrowing";
+import MyComponent from "../api/route";
+
+interface CardsProps {
+  id: number;
+}
 
 function page() {
+  const [cards, setCards] = useState<CardsProps[]>([]);
+
+  const addCard = () => {
+    setCards([...cards, { id: cards.length + 1 }]);
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <>
       <HomeHeader />
-      <div className="img-container">
-        <Image
-          src="https://images.unsplash.com/photo-1531988042231-d39a9cc12a9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-          alt=""
-          width="500"
-          height="500"
-        />
-      </div>
+      <main className={styles.main}>
+        <div className={styles.mainContainer}>
+          <section className={styles.section}>
+            <div className={styles.titleContainer}>
+              <div className={styles.title}>My borrowing</div>
+              <button className={styles.button} onClick={showModal}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            {modalOpen && <ModalForBorrowing setModalOpen={setModalOpen} />}
+
+            <div className={styles.cardContainer}>
+              <BorrowingBooksCard />
+              {cards.map((card) => (
+                <BorrowingBooksCard />
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <div className={styles.titleContainer}>
+              <div className={styles.title}>Currnetly Reading</div>
+              <button className={styles.button}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            <div className={styles.cardContainer}>
+              <BorrowingBooksCard />
+              <BorrowingBooksCard />
+            </div>
+          </section>
+        </div>
+
+        <MyComponent/>
+      </main>
     </>
   );
 }

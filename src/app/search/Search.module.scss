@@ -36,7 +36,6 @@
 }
 
 .wrapper {
-
   .searchBox {
     .searchButton {
       position: absolute;
@@ -87,4 +86,11 @@
 .img{
   width: 25%;
   height:30%;
+}
+
+.noData{
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  color: #6b9080;
 }

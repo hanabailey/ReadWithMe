@@ -60,9 +60,9 @@ function MyForm(query: any) {
 
 
           {img.length > 0 ? (
-        <div>
+        <div className={styles.imgContainer} >
           {img.map((image, index) => (
-            <img key={index} src={image}/>
+            <img key={index} src={image} className={styles.img}/>
           ))}
         </div>
           ): <p>no data</p>}

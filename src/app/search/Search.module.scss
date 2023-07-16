@@ -70,3 +70,21 @@
   right:0;
   border-radius: 50%;
 }
+
+.imgContainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 30px;
+  justify-content: center;
+  place-items: center;
+  align-items: flex-start;
+  width: 80%;
+  height: auto;
+  margin:auto;
+  padding: 3%;
+}
+
+.img{
+  width: 25%;
+  height:30%;
+}

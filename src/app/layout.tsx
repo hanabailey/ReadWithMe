@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Dancing_Script, Open_Sans } from 'next/font/google'
+import { Inter, Dancing_Script, Open_Sans, Poppins } from 'next/font/google'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,8 +12,15 @@ const dancing = Dancing_Script({
 
 const open_sans = Open_Sans({
   subsets: ['latin'],
-  variable: '--font-oepn_sans',
+  variable: '--font-open_sans',
   display: 'swap'
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  display: 'swap',
+  weight: '400'
 })
 
 

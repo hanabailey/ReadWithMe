@@ -23,7 +23,7 @@ function Modal(props:any) {
   }, []);
 
   const closeModal = () => {
-    props.setModalOpen(false);
+    props.setIsModalOpen(false);
   };
 
   return (

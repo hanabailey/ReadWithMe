@@ -7,7 +7,7 @@ import styles from "@/app/home/home.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalForBorrowing from "@/app/components/ModalForBorrowing";
-import MyComponent from "../api/route";
+
 
 interface CardsProps {
   id: number;
@@ -62,7 +62,6 @@ function page() {
           </section>
         </div>
 
-        <MyComponent/>
       </main>
     </>
   );

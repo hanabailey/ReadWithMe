@@ -5,7 +5,7 @@ import styles from "@/app/search/Search.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-
+import Modal from "../components/UI/Modal";
 
 
 
@@ -13,6 +13,8 @@ function MyForm(query: any) {
   const [searchTerm, setSearchTerm] = useState("");
   const [img,setImg] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
   const router = useRouter();
 
   const handleSubmit = (e: any) => {
@@ -43,6 +45,20 @@ function MyForm(query: any) {
     router.prefetch("/api");
   }, [router]);
 
+  
+
+  const openBookDetailModal = (index: number): void => {
+    console.log('clicked')
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
+  }
+
+  const closeBookDetailModal = (): void => {
+    setIsModalOpen(false);
+    setSelectedImageIndex(-1);
+  };
+
+
   return (
     <>
       <HomeHeader></HomeHeader>
@@ -62,10 +78,18 @@ function MyForm(query: any) {
         {img.length > 0 ? (
           <div className={styles.imgContainer} >
             {img.map((image, index) => (
-             <img key={index} src={image} className={styles.img}/>
+             <img key={index} src={image} className={styles.img} onClick={() => openBookDetailModal(index)}/>
             ))}
           </div>
         ): <h2 className={styles.noData}>No data</h2>}
+
+
+
+      {isModalOpen && selectedImageIndex !== -1 && (
+        <Modal imageUrl={img[selectedImageIndex]} setIsModalOpen={closeBookDetailModal}>
+          <p>MODAL OPEN</p>
+        </Modal> 
+      )}
 
 
     </>

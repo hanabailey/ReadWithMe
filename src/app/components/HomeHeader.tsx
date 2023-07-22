@@ -17,7 +17,7 @@ function HomeHeader() {
       <nav className={styles.nav}>
         <div><Link href='/home'>Home</Link></div>
         <div><Link href='/myLibrary'>My Library</Link></div>
-        <div><Link href='/calander'>Calender</Link></div>
+        <div><Link href='/calendar'>Calendar</Link></div>
         <div><Link href='/search'>Search</Link></div>
         <div><Link href='/bookClub'>Book club</Link></div>
       </nav>

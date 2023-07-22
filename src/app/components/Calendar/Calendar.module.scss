@@ -1,0 +1,91 @@
+.trackerApp {
+  $app-width: 90rem;
+  padding: 3rem;
+  width:70%;
+  margin: auto;
+  font-family: var(--font-poppins);
+  color: gray;
+
+  :global {
+    .header {
+      display: flex;
+      font-size: 3rem;
+      font-weight: 700;
+      justify-content: center;
+      
+      .month-year-display {
+        width: 18rem;
+        text-align: center;
+      }
+
+      .btn {
+        $button-size: 4rem;
+
+        width: $button-size;
+        height: $button-size;
+        line-height: $button-size - 0.5rem;
+        text-align: center;
+        border-radius: 50%;
+
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+          background-color: #efefef;
+        }
+
+        &:active {
+          box-shadow: #bbbbbb inset 1px 1px 3px 0px;
+        }
+      }
+    }
+
+    .calendar {
+      $tracker-border: 1px solid black;
+
+      margin: 3rem 0;
+
+      .day-header {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+        justify-items: center;
+        margin-bottom: 1rem;
+
+        font-size: 2rem;
+      }
+
+      .week-row {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+
+        border-top: $tracker-border;
+
+        &:last-child {
+          border-bottom: $tracker-border;
+        }
+
+        .date-box {
+          padding: 1rem;
+          height: calc($app-width / 7);
+
+          border-left: $tracker-border;
+
+          &:last-child {
+            border-right: $tracker-border;
+          }
+
+          .date {
+            text-align: right;
+            font-weight: bold;
+          }
+
+          &.out-month > .date {
+            opacity: 50%;
+          }
+        }
+      }
+    }
+  }
+}

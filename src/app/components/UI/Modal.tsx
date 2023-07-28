@@ -9,6 +9,7 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons"
 
 function Modal(props:any) {
 
+  // 모달창 켜지면 스크롤 안되게 만듬
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed; 
@@ -28,12 +29,12 @@ function Modal(props:any) {
 
   return (
     <>
-      <div className={styles.modalContainer} onClick={closeModal}>
+      <div className={styles.modalContainer} >
         <div className={styles.modalBody}>
           <button className={styles.close} onClick={closeModal}>
             <FontAwesomeIcon icon={faXmark} />
           </button>
-           {props.children}
+          <div className={styles.modalContent}>{props.children}</div>
         </div>
       </div>
     </>

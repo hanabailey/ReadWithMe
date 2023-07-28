@@ -6,6 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import Modal from "../components/UI/Modal";
+import BookSearchModal from "../components/BookSearchModal/BooSearchModal";
+
+import { createGetInitialProps } from '@mantine/next';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { Select } from '@mantine/core';
 
 
 
@@ -13,8 +18,14 @@ function MyForm(query: any) {
   const [searchTerm, setSearchTerm] = useState("");
   const [img,setImg] = useState('');
 
+  //모달창 & 책 이미지가져오기
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
+
+  //책정보
+  const [selectedBookInfo, setSelectedBookInfo] = useState<any>(null);
+  const [bookData, setBookData] = useState([]);
+
   const router = useRouter();
 
   const handleSubmit = (e: any) => {
@@ -29,9 +40,11 @@ function MyForm(query: any) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        const bookData = data.items
         const images = data.items.map((item:any) => item.image);
         console.log('img',images)
         setImg(images);
+        setBookData(data.items);
       });
   };
 
@@ -49,6 +62,7 @@ function MyForm(query: any) {
 
   const openBookDetailModal = (index: number): void => {
     console.log('clicked')
+    setSelectedBookInfo(bookData[index]); 
     setSelectedImageIndex(index);
     setIsModalOpen(true);
   }
@@ -84,11 +98,14 @@ function MyForm(query: any) {
         ): <h2 className={styles.noData}>No data</h2>}
 
 
-
+      {/* 모달 오픈  */}
       {isModalOpen && selectedImageIndex !== -1 && (
-        <Modal imageUrl={img[selectedImageIndex]} setIsModalOpen={closeBookDetailModal}>
-          <p>MODAL OPEN</p>
-        </Modal> 
+        <BookSearchModal img={img} 
+        selectedImageIndex={selectedImageIndex} 
+        setIsModalOpen={setIsModalOpen}
+        selectedBookInfo={selectedBookInfo}
+        />
+      
       )}
 
 
@@ -97,5 +114,5 @@ function MyForm(query: any) {
 }
 
 export default MyForm;
-
+4
 // // export default page

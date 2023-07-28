@@ -13,8 +13,8 @@
 
 
 .modalBody {
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   z-index: 999;
   
   /* 중앙 배치 */
@@ -40,3 +40,11 @@
     cursor: pointer;
   }
 }
+
+// .modalContent{
+//   width: 80%;
+//   background-color: aqua;
+//   height: 50vh; 
+//   overflow-y: auto; 
+// }
+

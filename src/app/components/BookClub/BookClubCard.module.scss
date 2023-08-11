@@ -1,0 +1,32 @@
+.bookClubCard{
+  width: 25%;
+  margin: 0;
+  z-index: 0;
+}
+
+.keyword{
+  width: 50%;
+  border: 1px solid black;
+  border-radius: 20px;
+  text-align: center;
+  margin: 3%;
+}
+
+.likeButton{
+  position: absolute;
+  top: 12px;
+  right: 11px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  &:hover{
+    cursor: pointer;
+    background-color: #6B9080;
+  }
+}
+
+
+
+

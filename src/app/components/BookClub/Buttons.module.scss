@@ -1,0 +1,44 @@
+.iconsContainer{
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 60%;
+  height: 120px;
+  margin: auto;
+  margin-top: 10%;
+  background-color: #b2d4c1;
+  border-radius: 20px;
+  box-shadow: 0 6.4px 14.4px 0 rgb(0 0 0 / 13%), 0 1.2px 3.6px 0 rgb(0 0 0 / 11%);
+  align-items: flex-start;
+}
+
+.buttonContainers{
+  margin-top: 5%;
+  margin: auto;
+
+}
+
+.iconButton{
+  width: 30%;
+  padding-top:3%;
+  margin: auto ;
+  color: #6B9080;
+  font-size: 50px;
+
+  &:hover{
+    cursor: pointer;
+    color: #f9f6f2;
+  }
+  
+}
+
+.iconTitle{
+  display: block;
+  font-weight: 600;
+  font-size: 18px;
+  color: #F6FFF8;
+  text-align:left;
+
+
+}

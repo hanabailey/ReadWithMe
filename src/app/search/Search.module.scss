@@ -88,6 +88,11 @@
 .img{
   width: 25%;
   height:30%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  &:hover{
+    cursor: pointer;
+    animation : circlemove 1.5s infinite linear;
+  }
 }
 
 .noData{

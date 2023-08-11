@@ -15,7 +15,7 @@
 .modalBody {
   width: 600px;
   height: 600px;
-  z-index: 999;
+  z-index: 999; 
   
   /* 중앙 배치 */
   /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
@@ -41,10 +41,7 @@
   }
 }
 
-// .modalContent{
-//   width: 80%;
-//   background-color: aqua;
-//   height: 50vh; 
-//   overflow-y: auto; 
-// }
+.modalContent{
+  height: 100%;
+}
 

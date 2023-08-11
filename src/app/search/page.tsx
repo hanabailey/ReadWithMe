@@ -5,12 +5,8 @@ import styles from "@/app/search/Search.module.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import Modal from "../components/UI/Modal";
-import BookSearchModal from "../components/BookSearchModal/BooSearchModal";
 
-import { createGetInitialProps } from '@mantine/next';
-import Document, { Head, Html, Main, NextScript } from 'next/document';
-import { Select } from '@mantine/core';
+import BookSearchModal from "../components/BookSearchModal/BookSearchModal";
 
 
 

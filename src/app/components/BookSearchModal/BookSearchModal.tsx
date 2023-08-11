@@ -1,12 +1,9 @@
 import React from "react";
 import styles from "@/app/components/BookSearchModal/BookSearchModal.module.scss";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../UI/Modal";
 import { createGetInitialProps } from "@mantine/next";
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import { Select, ScrollArea, Button } from "@mantine/core";
+import { Select, ScrollArea} from "@mantine/core";
 
 interface BookSearchModalProps {
   img: string[];

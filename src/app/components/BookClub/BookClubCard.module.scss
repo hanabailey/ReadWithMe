@@ -4,29 +4,42 @@
   z-index: 0;
 }
 
-.keyword{
-  width: 50%;
-  border: 1px solid black;
-  border-radius: 20px;
+.bookClubName{
+  padding: 3%;
   text-align: center;
-  margin: 3%;
 }
+
 
 .likeButton{
   position: absolute;
+  color: #A4C3B2;
   top: 12px;
   right: 11px;
   width: 35px;
   height: 35px;
   border-radius: 50%;
   border: 1px solid transparent;
-
+  
   &:hover{
     cursor: pointer;
     background-color: #6B9080;
   }
 }
 
+.keyword{
+  width: 55%;
+  font-size: 1em;
+  color: #f9f6f2;
+  background-color: #A4C3B2;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  text-align: center;
+  margin: 3%;
+  
+}
 
+.bookClubIntroDuction{
+  padding: 3%;
+}
 
 

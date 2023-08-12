@@ -35,16 +35,18 @@ const BookClubCard = () => {
           </button>
         </Card.Section>
 
-        <Text weight={500} size="lg" mt="md">
+        <Text weight={500} size="lg" mt="md" className={styles.bookClubName}>
           Read together!
         </Text>
 
-        <Text mt="xs" color="dimmed" size="sm">
+        <Text mt="xs" color="dimmed" size="sm" className={styles.bookClubIntroDuction}>
           Please click anywhere on this card to claim your reward, this is not a
           fraud, trust us
         </Text>
-        <div className={styles.keyword}>#keyWord</div>
-        <div className={styles.keyword}>#keyWord</div>
+
+        {/* 북클럽키워드5개까지 넣을 수 있음  */}
+        <div className={styles.keyword}>#keyword</div>
+        <div className={styles.keyword}>#keyword</div>
       </Card>
     </>
   );

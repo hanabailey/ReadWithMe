@@ -29,7 +29,7 @@ const Buttons = () => {
           <div className={styles.iconButton} onClick={createNewClubHandler}>
             <FontAwesomeIcon icon={faSquarePlus} />
           </div>
-          <label className={styles.iconTitle}>create New Club</label>
+          <label className={styles.iconTitle}>Create New Club</label>
         </div>
         <div className={styles.buttonContainers}>
           <div className={styles.iconButton}>

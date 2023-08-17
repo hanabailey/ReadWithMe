@@ -39,6 +39,40 @@
   font-size: 16px;
   color: #F6FFF8;
   text-align:left;
+}
+
+.createClubTitle{
+  font-family: var(--font-poppins);
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 5%;
+  color: #6b9080;
+}
 
 
+.createBookclubButton{
+  
+  display: inline-block;
+  outline: 0;
+  margin-top: 10%;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+  background: #b2d4c1;
+  border: 1px solid transparent;
+  font-size: 1em;
+  height: 31px;
+  padding: 0 11px;
+  text-align: center;
+  width: 100%;
+  min-width: 200px;
+  font-weight: 500;
+  color: #F6FFF8;
+
+  &:hover{
+      background: #6B9080;
+      border-color: transparent;
+      box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+  }
+  
 }

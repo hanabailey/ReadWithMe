@@ -6,15 +6,23 @@ import { useState } from "react";
 import styles from "./login.module.scss";
 import bookIcon from "../../../public/img/Vector.png";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const supabase = createClientComponentClient();
 
-  const login = () => {
-    document.cookie = "isLoggedIn=true";
-    router.push("/home");
+  const login = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: username,
+      password,
+    });
+
+    if (data.user) {
+      router.replace("/home");
+    }
   };
 
   return (
@@ -24,8 +32,10 @@ function LogIn() {
           <Image src={bookIcon} alt="My Image" width={30} height={30} />
         </div>
         <div className={styles.title}>Read With Me</div>
+
+        {/* 로그인 틀 */}
         <div className={styles.loginFrame}>
-          <h1 className={styles.loginTitle}>Log In</h1>
+          <h1 className={styles.loginTitle}>Sign In</h1>
           <div className={styles.formGroup}>
             <input
               type="text"
@@ -47,6 +57,7 @@ function LogIn() {
               LOG IN
             </button>
           </div>
+        <div className={styles.divisionSmallLine}><span>OR</span></div>
         </div>
       </div>
     </>

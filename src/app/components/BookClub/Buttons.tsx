@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Component, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import styles from "@/app/components/BookClub/Buttons.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,7 +14,7 @@ import Modal from "../UI/Modal";
 // create book club form
 import { useForm } from "@mantine/form";
 import { TextInput, Button, Group, Box } from "@mantine/core";
-import { Textarea, NumberInput  } from "@mantine/core";
+import { Textarea, NumberInput } from "@mantine/core";
 
 const Buttons = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,7 @@ const Buttons = () => {
   const form = useForm({
     initialValues: {
       bookClubName: "best club in town",
-      numberOfPeople: "5",
+      numberOfPeople: 5,
       keyWords: "economics",
       introduction: "",
     },
@@ -47,10 +47,10 @@ const Buttons = () => {
   });
 
   // Browsing book clubs page 전환
-  const router = useRouter()
-  const browsingClubsHandler =()=>{
-    router.push('/bookclub/bookClubSearchPage')
-  }
+  const router = useRouter();
+  const browsingClubsHandler = () => {
+    router.push("/bookclub/bookClubSearchPage");
+  };
   return (
     <>
       <div className={styles.iconsContainer}>
@@ -62,7 +62,10 @@ const Buttons = () => {
         </div>
         <div className={styles.buttonContainers}>
           <div className={styles.iconButton}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => router.push('/bookClub/bookClubSearchPage')} />
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              onClick={() => router.push("/bookClub/bookClubSearchPage")}
+            />
           </div>
           <label className={styles.iconTitle}>Browsing Clubs</label>
         </div>
@@ -81,7 +84,7 @@ const Buttons = () => {
           <Box maw={400} mx="auto">
             <form
               onSubmit={form.onSubmit((values) =>
-                setSubmittedValues(JSON.stringify(values, null, 2))
+                console.log(values)
               )}
             >
               <TextInput
@@ -96,24 +99,21 @@ const Buttons = () => {
                 placeholder="Keywords"
                 mt="md"
                 {...form.getInputProps("keyWords")}
-              />
+                />
+                <div>#keyword</div>
+                <div>#keyword</div>
+                <div>#keyword</div>
+     
               <NumberInput
                 withAsterisk
                 defaultValue={5}
                 max={15}
                 min={1}
-                placeholder="How many?"
+                placeholder="How many?(max 15)"
                 label="The number of people in club"
-                // {...form.getInputProps("numberOfPeople")}
-              />
-              <TextInput
-                withAsterisk
-                type="number"
-                label="The number of people in club"
-                placeholder="How many?"
-                mt="md"
                 {...form.getInputProps("numberOfPeople")}
               />
+              
               <Textarea
                 placeholder="write club introduction down"
                 label="Introduction"
@@ -121,8 +121,10 @@ const Buttons = () => {
                 // error="Try to say something to everybody!"
                 radius="md"
               />
-  
-              <button className={styles.createBookclubButton}>Create book club</button>
+
+              <button className={styles.createBookclubButton}>
+                Create book club
+              </button>
             </form>
 
             {submittedValues && <Code block>{submittedValues}</Code>}

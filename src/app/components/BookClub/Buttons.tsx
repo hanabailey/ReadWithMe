@@ -10,6 +10,7 @@ import {
   faUsersLine,
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../UI/Modal";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 // create book club form
 import { useForm } from "@mantine/form";
@@ -29,6 +30,9 @@ const Buttons = () => {
 
   //멘타인 create clubs form
   const [submittedValues, setSubmittedValues] = useState("");
+  const [formError, setFormError] = useState(null);
+  const supabase = createClientComponentClient();
+
 
   const form = useForm({
     initialValues: {
@@ -39,12 +43,33 @@ const Buttons = () => {
     },
 
     transformValues: (values: any) => ({
-      BookCLubNameme: `${values.bookClubName}`,
-      numberOfPeople: Number(values.numberOfPeople) || 0,
+      name: `${values.bookClubName}`,
+      numberOfMembers: Number(values.numberOfMembers) || 0,
       keyWords: `${values.keyWords}`,
       Introduction: `${values.introduction}`,
     }),
   });
+
+  const formSubmitHandler =async(values:any)=>{
+    const { data, error } = await supabase
+    .from("book_clubs") 
+    .insert([
+      {
+        name: values.name,
+        keywords: values.keyWords,
+        number_of_members: values.numberOfMembers,
+        introduction: values.Introduction
+      },
+    ]);
+
+    if (error) {
+      setFormError("Error inserting data");
+    } else {
+      console.log("Data inserted successfully", data);
+      // closeModal(); // Close the modal after successful insertion
+    }
+  }
+
 
   // Browsing book clubs page 전환
   const router = useRouter();
@@ -77,15 +102,19 @@ const Buttons = () => {
         </div>
       </div>
 
+
+
       {/* 북클럽만들기 모달 오픈 */}
       {isModalOpen && (
         <Modal isModalOpen={isModalOpen} setIsModalOpen={closeModal}>
           <h2 className={styles.createClubTitle}>Create New book club</h2>
           <Box maw={400} mx="auto">
             <form
+              // onSubmit={form.onSubmit((values) =>
+              //   console.log(values)
+              // )}
               onSubmit={form.onSubmit((values) =>
-                console.log(values)
-              )}
+                formSubmitHandler(values))}
             >
               <TextInput
                 withAsterisk

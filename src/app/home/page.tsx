@@ -17,7 +17,6 @@ interface CardsProps {
 function Page(props) {
   const [fetchError, setFetchError] = useState(null);
   const [books, setBooks] = useState<any>(null);
-  const [readingCurrentPage, setReadingCurrentPage] = useState(null);
 
   const supabase = createClientComponentClient();
 
@@ -37,12 +36,8 @@ function Page(props) {
 
       if(data){
         console.log('데이터있음',data)
-        // console.log('읽은페이지수', data[0].user_books[0].reading_current_page)
-        
-        const currentPage= data.map((item) => item.user_books[0]?.reading_current_page)
         setBooks(data)
         setFetchError(null)
-        setReadingCurrentPage(currentPage)
       }
     }
     
@@ -82,7 +77,7 @@ function Page(props) {
             {fetchError && <h2>{fetchError}</h2>}
             
             {books && books.map((book) => (
-                <BookCard key={book.isbn} bookDetail={book} currentPage={readingCurrentPage}/>
+                <BookCard key={book.isbn} bookDetail={book} />
               ))}
         
 

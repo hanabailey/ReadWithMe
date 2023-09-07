@@ -14,18 +14,16 @@ interface CardsProps {
   id: number;
 }
 
-function Page(props) {
+function page() {
   const [fetchError, setFetchError] = useState(null);
   const [books, setBooks] = useState<any>(null);
-  const [readingCurrentPage, setReadingCurrentPage] = useState(null);
-
   const supabase = createClientComponentClient();
 
   useEffect(()=>{
     const fetchBooks =async () => {
       const {data,error} = await supabase
       .from("books")
-      .select(`*, user_books(reading_current_page)`)
+      .select()
 
 
 
@@ -36,16 +34,12 @@ function Page(props) {
       }
 
       if(data){
-        console.log('데이터있음',data)
-        console.log('유저북 테이블', data[0].user_books[0].reading_current_page)
-        
-        const currentPage= data[0].user_books[0].reading_current_page
+        console.log('데이터',data)
         setBooks(data)
         setFetchError(null)
-        setReadingCurrentPage(currentPage)
       }
     }
-    
+
     fetchBooks()
 
   },[])
@@ -59,7 +53,7 @@ function Page(props) {
   };
 
   const closeModal =()=>{
-   setModalOpen(false);
+    setModalOpen(false);
   }
 
   return (
@@ -69,7 +63,6 @@ function Page(props) {
         <div className={styles.mainContainer}>
 
 
-        {/* TODO: modal 안꺼지는거 고쳐야함 */}
         {/* 현재 읽는 책 파트 */}
           <section className={styles.section}>
             <div className={styles.titleContainer}>
@@ -77,17 +70,14 @@ function Page(props) {
               <button className={styles.button} onClick={showModal}>
                 <FontAwesomeIcon icon={faPlus} />
               </button>
-              {modalOpen && <Modal setIsModalOpen={setModalOpen} modalClose={closeModal}/>}
+              {modalOpen && <Modal setModalOpen={setModalOpen} modalClose={closeModal}/>}
 
             </div>
             <div className={styles.cardContainer}>
             {fetchError && <h2>{fetchError}</h2>}
-            
             {books && books.map((book) => (
-                <BookCard key={book.isbn} bookDetail={book} currentPage={readingCurrentPage}/>
+                <BookCard key={book.isbn} bookDetail={book} />
               ))}
-        
-
             </div>
           </section>
 
@@ -99,7 +89,7 @@ function Page(props) {
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
-            {modalOpen && <Modal setIsModalOpen={setModalOpen}  />}
+            {modalOpen && <Modal setModalOpen={setModalOpen} />}
           </section>
         </div>
 
@@ -109,4 +99,4 @@ function Page(props) {
   );
 }
 
-export default Page;
+export default page;

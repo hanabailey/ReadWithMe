@@ -18,6 +18,9 @@ function BooksCard(props:any) {
 
   const currentReadingPercent = Math.floor((currentReadingPage/totalBookPage)*100)
 
+  if(currentReadingPage===null){
+      currentReadingPercent===0
+  }
   
   return (
     <>

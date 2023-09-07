@@ -10,13 +10,15 @@ function BooksCard(props:any) {
     return null
   }
 
-  console.log('현재페이지', props.currentPage)
-
-  const currentReadingPage = props.currentPage;
+  const currentReadingPage = props.bookDetail.user_books[0].reading_current_page;
   const totalBookPage = props.bookDetail.total_page;
 
-  const curentReadingPercent= Math.floor(currentReadingPage/totalBookPage*100);
+  console.log("읽은 페이지",currentReadingPage)
+  console.log("총페이지",totalBookPage)
 
+  const currentReadingPercent = Math.floor((currentReadingPage/totalBookPage)*100)
+
+  
   return (
     <>
     {console.log('북카드' ,props.bookDetail)}
@@ -25,7 +27,9 @@ function BooksCard(props:any) {
           <div>{<img src={props.bookDetail.img} className={styles.img}/>}</div>
           <div className={styles.bookTitle}>{props.bookDetail.title}</div>
           <div className={styles.author}>{props.bookDetail.author}</div>
-          <div className={styles.author}> {curentReadingPercent}% 읽음</div> 
+
+          {/* TODO: 여기 바차트로 다시 css 넣고 변경하기 */}
+          <div className={styles.author}> {currentReadingPercent}% 읽음</div> 
         </div>
       </Card>
     </>

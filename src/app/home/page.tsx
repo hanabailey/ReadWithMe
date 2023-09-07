@@ -37,9 +37,9 @@ function Page(props) {
 
       if(data){
         console.log('데이터있음',data)
-        console.log('유저북 테이블', data[0].user_books[0].reading_current_page)
+        // console.log('읽은페이지수', data[0].user_books[0].reading_current_page)
         
-        const currentPage= data[0].user_books[0].reading_current_page
+        const currentPage= data.map((item) => item.user_books[0]?.reading_current_page)
         setBooks(data)
         setFetchError(null)
         setReadingCurrentPage(currentPage)
@@ -68,8 +68,6 @@ function Page(props) {
       <main className={styles.main}>
         <div className={styles.mainContainer}>
 
-
-        {/* TODO: modal 안꺼지는거 고쳐야함 */}
         {/* 현재 읽는 책 파트 */}
           <section className={styles.section}>
             <div className={styles.titleContainer}>

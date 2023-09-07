@@ -33,43 +33,37 @@ const Buttons = () => {
   const [formError, setFormError] = useState(null);
   const supabase = createClientComponentClient();
 
-
   const form = useForm({
     initialValues: {
       bookClubName: "best club in town",
       numberOfPeople: 5,
-      keyWords: "economics",
+      keyWords: ["economics"],
       introduction: "",
     },
 
     transformValues: (values: any) => ({
-      name: `${values.bookClubName}`,
-      numberOfMembers: Number(values.numberOfMembers) || 0,
-      keyWords: `${values.keyWords}`,
-      Introduction: `${values.introduction}`,
+      name: values.bookClubName,
+      numberOfMembers: +values.numberOfMembers || 0,
+      keyWords: values.keyWords,
+      Introduction: values.introduction,
     }),
   });
 
-  const formSubmitHandler =async(values:any)=>{
-    const { data, error } = await supabase
-    .from("book_clubs") 
-    .insert([
-      {
-        name: values.name,
-        keywords: values.keyWords,
-        number_of_members: values.numberOfMembers,
-        introduction: values.Introduction
-      },
-    ]);
+  const formSubmitHandler = async (values: any) => {
+    const { data, error } = await supabase.from("book_clubs").insert({
+      name: values.name,
+      keywords: values.keyWords,
+      number_of_members: values.numberOfMembers,
+      introduction: values.Introduction,
+    });
 
     if (error) {
       setFormError("Error inserting data");
     } else {
       console.log("Data inserted successfully", data);
-      // closeModal(); // Close the modal after successful insertion
+     
     }
-  }
-
+  };
 
   // Browsing book clubs page 전환
   const router = useRouter();
@@ -102,19 +96,16 @@ const Buttons = () => {
         </div>
       </div>
 
-
-
       {/* 북클럽만들기 모달 오픈 */}
       {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} setIsModalOpen={closeModal}>
+        <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
           <h2 className={styles.createClubTitle}>Create New book club</h2>
           <Box maw={400} mx="auto">
             <form
               // onSubmit={form.onSubmit((values) =>
               //   console.log(values)
               // )}
-              onSubmit={form.onSubmit((values) =>
-                formSubmitHandler(values))}
+              onSubmit={form.onSubmit((values) => formSubmitHandler(values))}
             >
               <TextInput
                 withAsterisk
@@ -128,11 +119,11 @@ const Buttons = () => {
                 placeholder="Keywords"
                 mt="md"
                 {...form.getInputProps("keyWords")}
-                />
-                <div>#keyword</div>
-                <div>#keyword</div>
-                <div>#keyword</div>
-     
+              />
+              <div>#keyword</div>
+              <div>#keyword</div>
+              <div>#keyword</div>
+
               <NumberInput
                 withAsterisk
                 defaultValue={5}
@@ -142,7 +133,7 @@ const Buttons = () => {
                 label="The number of people in club"
                 {...form.getInputProps("numberOfPeople")}
               />
-              
+
               <Textarea
                 placeholder="write club introduction down"
                 label="Introduction"
@@ -151,7 +142,7 @@ const Buttons = () => {
                 radius="md"
               />
 
-              <button className={styles.createBookclubButton}>
+              <button className={styles.createBookclubButton} type="submit">
                 Create book club
               </button>
             </form>

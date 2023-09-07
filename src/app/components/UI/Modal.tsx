@@ -23,16 +23,16 @@ function Modal(props:any) {
     };
   }, []);
 
-  // const closeModal = () => {
-  //   props.setIsModalOpen(false);
-  // };
+  const closeModal = () => {
+    props.setIsModalOpen(false);
+  };
   
 
   return (
     <>
-      <div className={styles.modalContainer} onClick={props.modalClose}>
+      <div className={styles.modalContainer}>
         <div className={styles.modalBody}>
-          <button className={styles.close} onClick={props.modalClose}>
+          <button className={styles.close} onClick={closeModal}>
             <FontAwesomeIcon icon={faXmark} />
           </button>
           <div className={styles.modalContent}>{props.children}</div>

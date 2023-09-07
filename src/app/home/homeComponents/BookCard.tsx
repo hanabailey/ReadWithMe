@@ -10,6 +10,7 @@ function BooksCard(props:any) {
     return null
   }
 
+  //유저북테이블 안불러졌던 이유 : null이 값으로 들어가 있었는데 몰랐음
   const currentReadingPage = props.bookDetail.user_books[0].reading_current_page;
   const totalBookPage = props.bookDetail.total_page;
 
@@ -17,6 +18,7 @@ function BooksCard(props:any) {
   console.log("총페이지",totalBookPage)
 
   const currentReadingPercent = Math.floor((currentReadingPage/totalBookPage)*100)
+
 
   if(currentReadingPage===null){
       currentReadingPercent===0

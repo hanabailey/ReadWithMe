@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "@/app/components/BookSearchModal/BookSearchModal.module.scss";
 import Modal from "../UI/Modal";
-import { createGetInitialProps } from "@mantine/next";
-import Document, { Head, Html, Main, NextScript } from "next/document";
 import { Select, ScrollArea} from "@mantine/core";
 
 interface BookSearchModalProps {

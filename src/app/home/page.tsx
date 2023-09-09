@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "@/app/components/UI/Modal";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import BookCardModal from "./homeComponents/BookCardModal";
 
 
 interface CardsProps {
@@ -70,21 +71,22 @@ function Page(props) {
               <button className={styles.button} onClick={showModal}>
                 <FontAwesomeIcon icon={faPlus} />
               </button>
-              {modalOpen && <Modal setIsModalOpen={setModalOpen} modalClose={closeModal}/>}
-
+              {modalOpen && <BookCardModal setIsModalOpen={setModalOpen} modalClose={closeModal}></BookCardModal>}
             </div>
+            </section>
+
+            {/* 현재읽는책보여주는 카드들 */}
+            <section className={styles.section}>
             <div className={styles.cardContainer}>
             {fetchError && <h2>{fetchError}</h2>}
             
             {books && books.map((book) => (
                 <BookCard key={book.isbn} bookDetail={book} />
               ))}
-        
-
             </div>
-          </section>
+            </section>
 
-          {/* 빌린책 반납일정 */}
+          {/* 빌린책 반납일정
           <section className={styles.section}>
             <div className={styles.titleContainer}>
               <div className={styles.title}>My borrowing</div>
@@ -93,8 +95,9 @@ function Page(props) {
               </button>
             </div>
             {modalOpen && <Modal setIsModalOpen={setModalOpen}  />}
-          </section>
-        </div>
+            </section>*/}
+
+      </div> 
 
       </main>
 

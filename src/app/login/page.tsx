@@ -45,6 +45,7 @@ function LogIn() {
                 setUsername(e.target.value);
               }}
             />
+          
             <input
               type="password"
               placeholder="Password"
@@ -57,6 +58,7 @@ function LogIn() {
               LOG IN
             </button>
           </div>
+          
         <div className={styles.divisionSmallLine}><span>OR</span></div>
         </div>
       </div>

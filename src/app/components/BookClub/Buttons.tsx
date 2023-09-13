@@ -70,6 +70,7 @@ const Buttons = () => {
   const browsingClubsHandler = () => {
     router.push("/bookclub/bookClubSearchPage");
   };
+  
   return (
     <>
       <div className={styles.iconsContainer}>

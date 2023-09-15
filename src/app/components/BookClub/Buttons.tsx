@@ -37,14 +37,14 @@ const Buttons = () => {
     initialValues: {
       bookClubName: "best club in town",
       numberOfPeople: 5,
-      keyWords: ["economics"],
+      keyWords: "economics",
       introduction: "",
     },
 
     transformValues: (values: any) => ({
       name: values.bookClubName,
       numberOfMembers: +values.numberOfMembers || 0,
-      keyWords: values.keyWords,
+      keyWords: values.keyWords.split(",").map(x => x.trim()).filter(Boolean),
       Introduction: values.introduction,
     }),
   });

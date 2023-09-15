@@ -1,46 +1,83 @@
-.container{
-    display: flex;
-    justify-content: space-evenly;
-    width: 80%;
-    align-items: flex-start;
-    margin: auto;
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  align-items: flex-start;
+  margin: auto;
 }
 
 .title {
-    color: #6B9080;
-    font-family: var(--font-poppins);
-    border-left: 5px solid #6B9080;
-    padding-left: 3%;
-    font-weight: 800;
-    font-size: 2em;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    margin-left: 20%;
-  }
-  
+  color: #6b9080;
+  border-left: 5px solid #6b9080;
+  padding-left: 3%;
+  font-weight: 800;
+  font-size: 2em;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: 20%;
+}
 
-.bookDetailContainer{
-    width: 50%;
+.bookDetailContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0;
+}
+
+// .bookTitle{
+//     width: 100%;
+// }
+
+.authorTitle {
+  margin: 0;
+}
+.publisherTitle {
+  margin-bottom: 0;
+  margin-top: 2%;
+}
+.bookImg {
+  width: 20%;
+  height: 30%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.smallNav {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: auto;
+  font-family: var(--font-poppins);
+
+  button {
+    border: none;
+    background-color: transparent;
+    color: #6b9080;
+    width: 10%;
+    font-weight: 400;
+    font-size: 1em;
+    padding-bottom: 0.5%;
+    &:hover {
+      color: #b2d4c1;
+      cursor: pointer;
+      border-bottom: 3px solid #b2d4c1;
+    }
+    &.active {
+      color: #b2d4c1;
+      cursor: pointer;
+      border-bottom: 3px solid #b2d4c1;
+    }
+// 글로벌 넣으면 유니크 클래스네임 적용안됨
+
+  }
+}
+
+
+.infoSection{
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    margin: 0;
-}
-
-.bookTitle{
-    width: 100%;
-}
-
-.authorTitle{
-    margin: 0;
-}
-.publisherTitle{
-    margin-bottom: 0;
-    margin-top: 2%;
-}
-.bookImg{
-    width: 20%;
-    height: 30%;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    align-items: center;
 }

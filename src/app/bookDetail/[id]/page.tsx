@@ -4,6 +4,9 @@ import styles from "@/app/bookDetail/[id]/bookDetail.module.scss";
 import HomeHeader from "@/app/components/HomeHeader";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import DivisionLine from "@/app/components/UI/DivisionLine";
+import BookInfo from "@/app/components/BookDetail/BookInfo";
+import AllReviews from "@/app/components/BookDetail/AllReviews";
+import Timeline from "@/app/components/BookDetail/Timeline";
 
 //mentine
 import { Rating } from "@mantine/core";
@@ -11,21 +14,28 @@ import { Select } from "@mantine/core";
 import { Textarea } from "@mantine/core";
 import { Switch } from "@mantine/core";
 
+
+
 function BookDetail(props) {
   const [fetchError, setFetchError] = useState(null);
   const [books, setBooks] = useState<any>(null);
   const supabase = createClientComponentClient();
+  const [bookDescription, setBookDescription] = useState('')
+
   const book_isbn = props.params.id;
+  const [selectedStatus, setSelectedStatus] = useState("want to read"); 
 
   //mentine star rating
   const [value, setValue] = useState(0);
 
+
+//슈파베이스 테이블 불러오기
   useEffect(() => {
     const fetchBooks = async () => {
       const { data, error } = await supabase
         .from("books")
         .select(`*, user_books(*)`)
-        .eq("isbn", book_isbn); //id값이랑 맞는애만 불러와
+        .eq("isbn", book_isbn);//id값이랑 맞는애만 불러와
       console.log("책 isbn", book_isbn);
 
       if (error) {
@@ -46,7 +56,7 @@ function BookDetail(props) {
           data[0].user_books[0].star_review >= 0
         ) {
           setValue(data[0].user_books[0].star_review);
-          console.log(data[0].user_books[0].star_review);
+          console.log('별점',data[0].user_books[0].star_review);
         }
       }
     };
@@ -54,6 +64,56 @@ function BookDetail(props) {
     fetchBooks();
   }, []);
 
+//네이버 API패치
+  useEffect(() => {
+    const fetchBookDescription = async () => {
+      try {
+        const response = await fetch(`/api?query=${book_isbn}`);
+        const data = await response.json();
+        console.log('ISBN 매치데이터',data)
+
+          if (data.items.length > 0) {
+            setBookDescription(data.items[0]);
+            console.log(data.items[0])
+          }
+      
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchBookDescription();
+  }, [book_isbn]);
+
+
+
+
+  useEffect(() => {
+    const updateStatus = async () => {
+      const { data: user } = await supabase.auth.getUser();
+
+      // 사용자의 열을 업데이트하려면 열 이름과 새로운 값을 전달해야 합니다.
+      const { data, error } = await supabase
+        .from("user_books")
+        .update({ reading_status: selectedStatus }) // 여기서 "status"는 열(column) 이름입니다.
+        .eq("user_id", user?.id);
+
+      if (error) {
+        console.error("열 업데이트 중 오류 발생:", error);
+      } else {
+        console.log("성공");
+      }
+    };
+
+
+  }, [selectedStatus]);
+
+
+
+   // 사용자가 선택한 상태가 변경될 때마다 상태(state) 업데이트
+   const statusChangeHandler = (newValue) => {
+    setSelectedStatus(newValue);
+  };
+  
   //smallNav
   const [activeTab, setActiveTab] = useState(0);
   const handleTabClick = (index: number) => {
@@ -121,9 +181,13 @@ function BookDetail(props) {
 
           <div className={styles.infoSection}>
             <h2 className={styles.infoHeader}>MY</h2>
+
+            {/* 읽기상태 */}
             <Select
               label="Reading status"
               placeholder="Pick one"
+              onChange={statusChangeHandler}
+              value={selectedStatus}
               data={[
                 { value: "want to read", label: "want to read" },
                 { value: "reading", label: "reading" },
@@ -168,24 +232,31 @@ function BookDetail(props) {
 
           <DivisionLine/>
 
-          <h2>Rate</h2>
+          {/* TODO: 막대그래프 형식으로 별점 측정하기 */}
+          <h2 className={styles.infoHeader}>Rate</h2>
 
           <DivisionLine/>
 
-          <h2>Review</h2>
+
+          <h2 className={styles.infoHeader}>Review</h2>
+          <AllReviews  params={props.params} starReview={value}></AllReviews>
           <DivisionLine/>
 
-{/* 언제 서재에 넣었고, 다읽은 날, 독서상태 변경되면 타임라인에 반영 */}
-          <h2>Timeline</h2>
-          <DivisionLine/>
-          
-  {/* 페이지, 출판사,ISBN, 정가, 관련링크 */}
-          <h2>Book Detail</h2>
+          {/* 언제 서재에 넣었고, 다읽은 날, 독서상태 변경되면 타임라인에 반영 */}
+          <h2 className={styles.infoHeader}>Timeline</h2>
+          <Timeline></Timeline>
           <DivisionLine/>
 
-          <h2>Book description</h2>
+          {/* 페이지, 출판사,ISBN, 정가, 관련링크 */}
+          <h2 className={styles.infoHeader}>Book Detail</h2>
+          <BookInfo bookInfo={bookDescription} books={books}/>
 
           <DivisionLine/>
+
+          <h2 className={styles.infoHeader}>Book description</h2>
+          <p>{bookDescription.description}</p>
+
+          <DivisionLine />
 
           </div>
 

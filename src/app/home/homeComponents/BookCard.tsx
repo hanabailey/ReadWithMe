@@ -14,8 +14,8 @@ function BooksCard(props:any) {
   }
 
   //유저북테이블 안불러졌던 이유 : null이 값으로 들어가 있었는데 몰랐음
-  const currentReadingPage = props.bookDetail.user_books[0].reading_current_page;
-  const totalBookPage = props.bookDetail.total_page;
+  const currentReadingPage = props.bookDetail.reading_current_page;
+  const totalBookPage = props.bookDetail.books.total_page;
 
   console.log("읽은 페이지",currentReadingPage)
   console.log("총페이지",totalBookPage)
@@ -28,7 +28,7 @@ function BooksCard(props:any) {
   }
 
   //북카드 클릭시 관련 책 페이지로 랜더링 되게하기
-  const id = props.bookDetail.isbn;
+  const id = props.bookDetail.books.isbn;
   console.log('책 아이디',id)
 
   const bookDetailHandler =()=>{
@@ -41,9 +41,9 @@ function BooksCard(props:any) {
     {console.log('북카드' ,props.bookDetail)}
       <Card>
         <div className={styles.container}>
-          <div>{<img src={props.bookDetail.img} className={styles.img}/>}</div>
-          <div className={styles.bookTitle}>{props.bookDetail.title}</div>
-          <div className={styles.author}>{props.bookDetail.author}</div>
+          <div>{<img src={props.bookDetail.books.img} className={styles.img}/>}</div>
+          <div className={styles.bookTitle}>{props.bookDetail.books.title}</div>
+          <div className={styles.author}>{props.bookDetail.books.author}</div>
 
           {/* TODO: 여기 바차트로 다시 css 넣고 변경하기 */}
           <div className={styles.author}> {currentReadingPercent}% 읽음</div> 

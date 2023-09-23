@@ -21,9 +21,17 @@ function Page(props) {
 
   useEffect(() => {
     const fetchBooks = async () => {
+
+      const {
+            data: { user },
+          } = await supabase.auth.getUser();
+    
       const { data, error } = await supabase
-        .from("books")
-        .select(`*, user_books(reading_current_page)`);
+        .from("user_books")
+        // .select(`*, books`);
+        .select("reading_current_page, books(*)")
+        .eq("user_id", user.id);
+    
 
       if (error) {
         setFetchError("Could not find data");
@@ -95,9 +103,9 @@ function Page(props) {
             <div className={styles.cardContainer}>
               {fetchError && <h2>{fetchError}</h2>}
 
-              {books &&
+              {books && 
                 books.map((book) => (
-                  <BookCard key={book.isbn} bookDetail={book} />
+                  <BookCard key={book.books.isbn} bookDetail={book} />
                 ))}
             </div>
           </section>

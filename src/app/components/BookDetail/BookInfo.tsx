@@ -18,10 +18,10 @@ function BookInfo(props) {
   // } 
 
   
-
     //버튼누르면 네이버로 넘어감
     const exploreButton =()=>{
-      const link = props.bookDescription.link;
+      
+      const link = props.bookInfo.link;
       if(link){
         window.open(link, '_blank');
       }

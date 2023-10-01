@@ -211,12 +211,6 @@ function BookDetail(props) {
             <AllReviews isbn={book_isbn} />
             <DivisionLine />
 
-            {/* TODO: 내서재 파트로 이동시켜야됨 */}
-            {/* 언제 서재에 넣었고, 다읽은 날, 독서상태 변경되면 타임라인에 반영
-          <h2 className={styles.infoHeader}>Timeline</h2>
-          <Timeline books={books}></Timeline>
-          <DivisionLine/> */}
-
             {/* 페이지, 출판사,ISBN, 정가, 관련링크 */}
             <h2 className={styles.infoHeader}>Book Detail</h2>
             <BookInfo bookInfo={bookDescription} books={books} />

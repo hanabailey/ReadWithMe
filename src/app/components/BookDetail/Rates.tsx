@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-function Rate({isbn}) {
-  const [starReviews, setStarReviews] = useState();
+function Rate({ isbn }) {
+  const [starFrequency, setStarFrequency] = useState([0, 0, 0, 0, 0]);
+  const [userCount,setuserCount] = useState<any>();
+  const [averageRating , setAverageRating] = useState(0)
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -13,18 +17,31 @@ function Rate({isbn}) {
           .from("user_books")
           .select("star_review")
           .eq("isbn", isbn);
-          console.log(data)
-          //데이터가안들어오고 있음 / RLS 접근 가능하게 해둔 상태
 
         if (error) {
           console.error("에러", error);
         } else {
-        
-            if (data && data.length > 0 && data[0].star_review) {
-                // 사용자의 star_review 데이터만 추출하여 배열에 저장
-                const starReviewData = data.map((review) => review.star_review);
-                setStarReviews(starReviewData);
+          if (data && data.length > 0) {
+            const starReviewData = data
+              .map((review) => review.star_review)
+              .filter((starReview) => starReview !== null);
+              const userCount= starReviewData.length;
+              setuserCount(userCount)
+
+              if (starReviewData.length > 0) {
+                const sum = starReviewData.reduce((acc, rating) => acc + rating, 0);
+                const average = sum / starReviewData.length;
+                setAverageRating(average);
               }
+
+            // 별점 빈도수 계산
+            const newStarFrequency = [0, 0, 0, 0, 0];
+            starReviewData.forEach((rating) => {
+              newStarFrequency[rating - 1]++;
+            });
+
+            setStarFrequency(newStarFrequency);
+          }
         }
       } catch (error) {
         console.error("에러", error);
@@ -34,51 +51,41 @@ function Rate({isbn}) {
     fetchReviews();
   }, [isbn]);
 
-  // 바 차트 데이터 설정
   const chartData = {
     labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
     datasets: [
       {
-        label: "별점 분포",
-        data: [1, 2, 3, 4, 5],
+        label: "star ",
+        data: starFrequency,
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
+          "#A4C3B2",
+          "#A4C3B2",
+          "#A4C3B2",
+          "#A4C3B2",
+          "#A4C3B2",
+          
         ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(255, 205, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(54, 162, 235, 1)",
-        ],
+        
         borderWidth: 1,
       },
     ],
   };
 
-//   // 별점 빈도수 계산
-//   starReviews.forEach((rating) => {
-//     chartData.datasets[0].data[rating - 1]++;
-//   });
-
   return (
     <div>
-      {/* <Bar
+      <h3>Total Users : {userCount}</h3>
+      <h4>Average Rating :{averageRating}</h4>
+
+      <Bar
         data={chartData}
         options={{
           scales: {
             y: {
-            type: 'linear', 
-              beginAtZero: true,
-              stepSize: 1,
+              display:false,
             },
           },
         }}
-      /> */}
+      />
     </div>
   );
 }

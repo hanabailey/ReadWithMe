@@ -79,7 +79,7 @@ function BookDetail(props) {
     fetchBookDescription();
   }, [book_isbn]);
 
-  // 사용자가 선택한 상태가 변경될 때마다 상태(state) 업데이트
+  // 사용자가 선택한 상태가 변경될 때마다 상태 업데이트
   const statusChangeHandler = (newValue) => {
     setSelectedStatus(newValue);
   };
@@ -201,7 +201,6 @@ function BookDetail(props) {
 
             <DivisionLine />
 
-            {/* TODO: 막대그래프 형식으로 별점 측정하기 */}
             <h2 className={styles.infoHeader}>Rate</h2>
             <Rates isbn={book_isbn} />
 

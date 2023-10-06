@@ -9,6 +9,9 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import BookCardModal from "./homeComponents/BookCardModal";
 
+import { useContext } from "react";
+import { BookClubContext, useGlobalContext } from "../context/bookClubData";
+
 interface CardsProps {
   id: number;
 }
@@ -16,6 +19,7 @@ interface CardsProps {
 function Page(props) {
   const [fetchError, setFetchError] = useState(null);
   const [books, setBooks] = useState<any>(null);
+  const bookClub = useGlobalContext();
 
   const supabase = createClientComponentClient();
 
@@ -113,6 +117,7 @@ function Page(props) {
           <section className={styles.section}>
             <div className={styles.titleContainer}>
               <div className={styles.title}>Book Club activities</div>
+              {bookClub && bookClub.length>0 &&<p>{bookClub[0].book_clubs.name}</p>}
             </div>
           </section>
         </div>

@@ -55,7 +55,7 @@ function Rate({ isbn }) {
     labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
     datasets: [
       {
-        label: "star ",
+        label: "users",
         data: starFrequency,
         backgroundColor: [
           "#A4C3B2",
@@ -63,7 +63,6 @@ function Rate({ isbn }) {
           "#A4C3B2",
           "#A4C3B2",
           "#A4C3B2",
-          
         ],
         
         borderWidth: 1,

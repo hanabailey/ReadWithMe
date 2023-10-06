@@ -4,14 +4,23 @@ import { Card, Image, Text } from "@mantine/core";
 import styles from "@/app/components/BookClub/BookClubCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { BookClubContext, useGlobalContext } from "@/app/context/bookClubData";
+import BookClub from "@/app/bookClub/page";
 
-const BookClubCard = () => {
+const BookClubCard = (props) => {
   const [liked, setLiked] = useState(false);
+  // const bookClub = useGlobalContext();
+
+  console.log(props.searchResult)
+
+  // console.log(props.bookClub);
+  // if (!props.bookClub) return null;
+
 
   const handleLikeClick = () => {
     setLiked(!liked);
   };
-
 
   return (
     <>
@@ -38,17 +47,26 @@ const BookClubCard = () => {
         </Card.Section>
 
         <Text weight={500} size="lg" mt="md" className={styles.bookClubName}>
-          Read together!
+          {props.searchResult.name}
         </Text>
-
-        <Text mt="xs" color="dimmed" size="sm" className={styles.bookClubIntroDuction}>
-          Please click anywhere on this card to claim your reward, this is not a
-          fraud, trust us
+        <Text
+          mt="xs"
+          color="dimmed"
+          size="sm"
+          className={styles.bookClubIntroDuction}
+        >
+          {props.searchResult.introduction}
         </Text>
 
         {/* 북클럽키워드5개까지 넣을 수 있음  */}
-        <div className={styles.keyword}>#keyword</div>
-        <div className={styles.keyword}>#keyword</div>
+        {props.searchResult.keywords &&
+          props.searchResult.keywords
+            .slice(0, 5)
+            .map((keyword, index) => (
+              <div key={index} className={styles.keyword}>
+                #{keyword}
+              </div>
+            ))}
       </Card>
     </>
   );

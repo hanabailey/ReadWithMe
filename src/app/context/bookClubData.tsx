@@ -23,9 +23,9 @@ export const BookClubContextProvider = ({children}) =>{
             } = await supabase.auth.getUser();
       
         const { data, error } = await supabase
-          .from("book_club_users")
-          .select("*, book_clubs(*)")
-          .eq("user_id", user.id);
+          .from("book_clubs")
+          .select("*, book_club_users(*),book_activities(*), book_club_recommends(*)")
+          // .eq("user_id", user.id);
       
   
         if (error) {

@@ -19,9 +19,10 @@ interface CardsProps {
 function Page(props) {
   const [fetchError, setFetchError] = useState(null);
   const [books, setBooks] = useState<any>(null);
-  const bookClub = useGlobalContext();
+  const bookClub = useContext(BookClubContext);
 
   const supabase = createClientComponentClient();
+  console.log('북클럽 컨텍스트' , bookClub)
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -117,7 +118,7 @@ function Page(props) {
           <section className={styles.section}>
             <div className={styles.titleContainer}>
               <div className={styles.title}>Book Club activities</div>
-              {bookClub && bookClub.length>0 &&<p>{bookClub[0].book_clubs.name}</p>}
+              {/* {bookClub&&<p>{bookClub[0].name}</p>} */}
             </div>
           </section>
         </div>

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter, Dancing_Script, Open_Sans, Poppins } from "next/font/google";
 import { BookClubContextProvider } from "./context/bookClubData";
+import { BookClubUserContextProvider } from "./context/bookClubUserData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${dancing.variable}`}>
-        <BookClubContextProvider>{children}</BookClubContextProvider>
+        <BookClubContextProvider><BookClubUserContextProvider>{children}</BookClubUserContextProvider></BookClubContextProvider>
       </body>
     </html>
   );

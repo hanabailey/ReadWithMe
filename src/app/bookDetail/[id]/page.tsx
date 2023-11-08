@@ -9,10 +9,10 @@ import AllReviews from "@/app/components/BookDetail/AllReviews";
 import Rates from "@/app/components/BookDetail/Rates";
 
 //mentine
-import { Rating } from "@mantine/core";
-import { Select } from "@mantine/core";
-import { Textarea } from "@mantine/core";
 import { Switch } from "@mantine/core";
+import ReadingStatus from "@/app/components/BookDetail/ReadingStatus";
+import StarReview from "@/app/components/BookDetail/StarReview";
+import ShortReview from "@/app/components/BookDetail/ShortReview";
 
 function BookDetail(props) {
   const [fetchError, setFetchError] = useState(null);
@@ -21,7 +21,7 @@ function BookDetail(props) {
   const [bookDescription, setBookDescription] = useState("");
 
   const book_isbn = props.params.id;
-  const [selectedStatus, setSelectedStatus] = useState("want to read");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   //mentine star rating
   const [value, setValue] = useState(0);
@@ -151,46 +151,14 @@ function BookDetail(props) {
           <div className={styles.infoSection}>
             <h2 className={styles.infoHeader}>MY</h2>
 
-            {/* 읽기상태 */}
-            <Select
-              label="Reading status"
-              placeholder="Pick one"
-              onChange={statusChangeHandler}
-              value={selectedStatus}
-              data={[
-                { value: "want to read", label: "want to read" },
-                { value: "reading", label: "reading" },
-                { value: "done", label: "done" },
-                { value: "pause", label: "pause" },
-                { value: "stop", label: "stop" },
-              ]}
-            />
+            {/* 리딩상태 */}
+            <ReadingStatus selectedStatus={selectedStatus} bookIsbn={book_isbn} />
 
             {/* 별점 */}
-            <h3 className={styles.infoSubHeader}>Rating</h3>
-            <div className={styles.ratingContainer}>
-              <Rating value={value} onChange={setValue} />
-              {/* TODO: 별점 바꾸면 디비에도 반영되게 해라 */}
-              <button
-                onClick={() => setValue(0)}
-                className={styles.enterButton}
-              >
-                reset
-              </button>
-            </div>
+            <StarReview bookIsbn={book_isbn}/>
 
             {/* 짧은리뷰 */}
-            <h3 className={styles.infoSubHeader}>Short Review</h3>
-            <p>
-              What do you think about this book? Write your short review down.
-            </p>
-            <Textarea
-              placeholder="Your short review"
-              label="Short review"
-              radius="md"
-              size="md"
-            />
-            <button className={styles.enterButton}>Enter</button>
+            <ShortReview bookIsbn={book_isbn} />
 
             {/* 마이픽 */}
             <h3 className={styles.infoSubHeader}>My pick</h3>

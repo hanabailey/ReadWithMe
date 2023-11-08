@@ -1,14 +1,16 @@
-'use client'
+"use client";
 
-import React from "react";
+import React, { Dispatch, FC, MouseEventHandler, PropsWithChildren, SetStateAction } from "react";
 import styles from "@/app/components/UI/Modal.module.scss";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons"
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+type ModalProps = {
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+};
 
-function Modal(props:any) {
-
+const Modal: FC<PropsWithChildren<ModalProps>> = (props) => {
   // 모달창 켜지면 스크롤 안되게 만듬
   useEffect(() => {
     document.body.style.cssText = `
@@ -18,15 +20,16 @@ function Modal(props:any) {
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;
-      document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
 
-  const closeModal = () => {
+  const closeModal: MouseEventHandler = (event) => {
+    console.log("close !!")
+    event.stopPropagation();
     props.setIsModalOpen(false);
   };
-  
 
   return (
     <>
@@ -40,6 +43,6 @@ function Modal(props:any) {
       </div>
     </>
   );
-}
+};
 
 export default Modal;

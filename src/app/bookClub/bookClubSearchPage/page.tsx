@@ -16,7 +16,7 @@ const BookClubSearching = () => {
     try {
       const { data, error } = await supabase
         .from("book_clubs")
-        .select("*")
+        .select("* ")
         // .contains("keywords", [searchTerm])
         .or(`name.ilike.%${searchTerm}%,keywords.cs.{${searchTerm}}`);
 
@@ -28,13 +28,15 @@ const BookClubSearching = () => {
         console.error("에러", error);
       } else {
         setSearchResults(data);
-        console.log(data);
         console.log(searchTerm);
       }
     } catch (error) {
       console.error("에러", error);
     }
   };
+
+
+
 
   return (
     <>
@@ -67,7 +69,7 @@ const BookClubSearching = () => {
         <>
           <div className={styles.cardContainer}>
             {searchResults.map((club) => (
-              <BookClubCard key={club.book_club_id} searchResult={club} />
+              <BookClubCard key={club.book_club_id} searchResult={club}/>
             ))}
           </div>
         </>

@@ -15,7 +15,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 // create book club form
 import { useForm } from "@mantine/form";
 import { TextInput, Button, Group, Box } from "@mantine/core";
-import { Textarea, NumberInput } from "@mantine/core";
+import { Textarea, NumberInput,FileInput } from "@mantine/core";
 
 const Buttons = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +44,10 @@ const Buttons = () => {
     transformValues: (values: any) => ({
       name: values.bookClubName,
       numberOfMembers: +values.numberOfMembers || 0,
-      keyWords: values.keyWords.split(",").map(x => x.trim()).filter(Boolean),
+      keyWords: values.keyWords
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean),
       Introduction: values.introduction,
     }),
   });
@@ -61,7 +64,6 @@ const Buttons = () => {
       setFormError("Error inserting data");
     } else {
       console.log("Data inserted successfully", data);
-     
     }
   };
 
@@ -70,7 +72,7 @@ const Buttons = () => {
   const browsingClubsHandler = () => {
     router.push("/bookclub/bookClubSearchPage");
   };
-  
+
   return (
     <>
       <div className={styles.iconsContainer}>
@@ -122,8 +124,6 @@ const Buttons = () => {
                 {...form.getInputProps("keyWords")}
               />
               <div>#keyword</div>
-              <div>#keyword</div>
-              <div>#keyword</div>
 
               <NumberInput
                 withAsterisk
@@ -141,6 +141,12 @@ const Buttons = () => {
                 description="Let's introduce our new book club !"
                 // error="Try to say something to everybody!"
                 radius="md"
+              />
+
+              <FileInput
+                label="Image upload"
+                description="set up club image"
+                placeholder="Input placeholder"
               />
 
               <button className={styles.createBookclubButton} type="submit">

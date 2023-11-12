@@ -7,12 +7,11 @@ import DivisionLine from "@/app/components/UI/DivisionLine";
 import BookInfo from "@/app/components/BookDetail/BookInfo";
 import AllReviews from "@/app/components/BookDetail/AllReviews";
 import Rates from "@/app/components/BookDetail/Rates";
-
-//mentine
-import { Switch } from "@mantine/core";
 import ReadingStatus from "@/app/components/BookDetail/ReadingStatus";
 import StarReview from "@/app/components/BookDetail/StarReview";
 import ShortReview from "@/app/components/BookDetail/ShortReview";
+import MyPick from "@/app/components/BookDetail/MyPick";
+import CurrentPageRead from "@/app/components/BookDetail/CurrentPageRead";
 
 function BookDetail(props) {
   const [fetchError, setFetchError] = useState(null);
@@ -88,6 +87,25 @@ function BookDetail(props) {
   const [activeTab, setActiveTab] = useState(0);
   const handleTabClick = (index: number) => {
     setActiveTab(index);
+   
+    if(index===0){
+      document.getElementById("My").scrollIntoView();
+    }
+    if(index===1){
+      document.getElementById("Rate").scrollIntoView();
+    }
+    if(index===2){
+      document.getElementById("Review").scrollIntoView();
+    }
+    // if(index===3){
+    //   document.getElementById("Review").scrollIntoView();
+    // }
+    if(index===4){
+      document.getElementById("BookDetail").scrollIntoView();
+    }
+    if(index===5){
+      document.getElementById("Description").scrollIntoView();
+    }
   };
 
   return (
@@ -108,7 +126,6 @@ function BookDetail(props) {
           <DivisionLine />
 
           {/* 여기서 작게 네비바로 버튼 클릭시 이동  */}
-
           <nav className={styles.smallNav}>
             <button
               className={activeTab === 0 ? styles.active : ""}
@@ -149,42 +166,41 @@ function BookDetail(props) {
           </nav>
 
           <div className={styles.infoSection}>
-            <h2 className={styles.infoHeader}>MY</h2>
+            <h2 className={styles.infoHeader} id="My">MY</h2>
 
             {/* 리딩상태 */}
-            <ReadingStatus selectedStatus={selectedStatus} bookIsbn={book_isbn} />
+              <ReadingStatus selectedStatus={selectedStatus} bookIsbn={book_isbn} />
 
             {/* 별점 */}
-            <StarReview bookIsbn={book_isbn}/>
+            <StarReview bookIsbn={book_isbn} />
 
             {/* 짧은리뷰 */}
             <ShortReview bookIsbn={book_isbn} />
 
             {/* 마이픽 */}
-            <h3 className={styles.infoSubHeader}>My pick</h3>
-            <div className={styles.recommendationContainer}>
-              <p className={styles.recoMention}>Do you recommend this book?</p>
-              <Switch size="lg" />
-            </div>
+            <MyPick bookIsbn={book_isbn} />
+
+            {/* 현재 읽은 페이지 */}
+            {/* <CurrentPageRead bookIsbn={book_isbn} /> */}
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader}>Rate</h2>
+            <h2 className={styles.infoHeader} id="Rate">Rate</h2>
             <Rates isbn={book_isbn} />
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader}>Review</h2>
+            <h2 className={styles.infoHeader} id="Review">Review</h2>
             <AllReviews isbn={book_isbn} />
             <DivisionLine />
 
             {/* 페이지, 출판사,ISBN, 정가, 관련링크 */}
-            <h2 className={styles.infoHeader}>Book Detail</h2>
+            <h2 className={styles.infoHeader} id="BookDetail">Book Detail</h2>
             <BookInfo bookInfo={bookDescription} books={books} />
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader}>Book description</h2>
+            <h2 className={styles.infoHeader} id="Description">Book description</h2>
             <p>{bookDescription.description}</p>
 
             <DivisionLine />

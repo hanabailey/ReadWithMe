@@ -7,6 +7,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {faCircleUser,faRectangleList,faClipboard,faChartColumn} from "@fortawesome/free-solid-svg-icons";
 import Timeline from "@/app/components/MyLibrary//Timeline";
 import MyBookList from '../components/MyLibrary/MyBookList'
+import Statistics from '../components/MyLibrary/Statistics'
 
 function Page() {
   const [fetchError, setFetchError] = useState(null);
@@ -66,6 +67,7 @@ function Page() {
           <h2 className={styles.title}>Timeline</h2>
           {books && <Timeline detail={books}></Timeline>}
           <h2 className={styles.title}>Reading statistics</h2>
+          {books &&<Statistics books={books}/>}
         </div>
       </div>
     </>

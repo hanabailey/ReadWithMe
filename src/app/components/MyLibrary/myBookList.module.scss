@@ -1,6 +1,9 @@
 .bookImg{
     width: 100px;
     height: 130px;
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 .mainContainer{

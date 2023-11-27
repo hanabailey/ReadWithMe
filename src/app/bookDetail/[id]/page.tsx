@@ -181,7 +181,7 @@ function BookDetail(props) {
             <MyPick bookIsbn={book_isbn} />
 
             {/* 현재 읽은 페이지 */}
-            {/* <CurrentPageRead bookIsbn={book_isbn} /> */}
+            {/* <CurrentPageRead bookIsbn={book_isbn} books={books}/> */}
 
             <DivisionLine />
 

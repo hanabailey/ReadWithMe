@@ -51,8 +51,14 @@ $book-height: 60px;
     .bookImgBox {
       background-color: brown;
       height: $book-height;
-      border: 2px solid black;
+      width: $book-width;
+      border: 0.5px solid #d3d3d3;
       box-sizing: border-box;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     p {

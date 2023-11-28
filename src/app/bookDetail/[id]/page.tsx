@@ -87,23 +87,23 @@ function BookDetail(props) {
   const [activeTab, setActiveTab] = useState(0);
   const handleTabClick = (index: number) => {
     setActiveTab(index);
-   
-    if(index===0){
+
+    if (index === 0) {
       document.getElementById("My").scrollIntoView();
     }
-    if(index===1){
+    if (index === 1) {
       document.getElementById("Rate").scrollIntoView();
     }
-    if(index===2){
+    if (index === 2) {
       document.getElementById("Review").scrollIntoView();
     }
     // if(index===3){
     //   document.getElementById("Review").scrollIntoView();
     // }
-    if(index===4){
+    if (index === 4) {
       document.getElementById("BookDetail").scrollIntoView();
     }
-    if(index===5){
+    if (index === 5) {
       document.getElementById("Description").scrollIntoView();
     }
   };
@@ -166,10 +166,15 @@ function BookDetail(props) {
           </nav>
 
           <div className={styles.infoSection}>
-            <h2 className={styles.infoHeader} id="My">MY</h2>
+            <h2 className={styles.infoHeader} id="My">
+              MY
+            </h2>
 
             {/* 리딩상태 */}
-              <ReadingStatus selectedStatus={selectedStatus} bookIsbn={book_isbn} />
+            <ReadingStatus
+              selectedStatus={selectedStatus}
+              bookIsbn={book_isbn}
+            />
 
             {/* 별점 */}
             <StarReview bookIsbn={book_isbn} />
@@ -181,26 +186,34 @@ function BookDetail(props) {
             <MyPick bookIsbn={book_isbn} />
 
             {/* 현재 읽은 페이지 */}
-            {/* <CurrentPageRead bookIsbn={book_isbn} books={books}/> */}
+            <CurrentPageRead bookIsbn={book_isbn} books={books}/>
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader} id="Rate">Rate</h2>
+            <h2 className={styles.infoHeader} id="Rate">
+              Rate
+            </h2>
             <Rates isbn={book_isbn} />
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader} id="Review">Review</h2>
+            <h2 className={styles.infoHeader} id="Review">
+              Review
+            </h2>
             <AllReviews isbn={book_isbn} />
             <DivisionLine />
 
             {/* 페이지, 출판사,ISBN, 정가, 관련링크 */}
-            <h2 className={styles.infoHeader} id="BookDetail">Book Detail</h2>
+            <h2 className={styles.infoHeader} id="BookDetail">
+              Book Detail
+            </h2>
             <BookInfo bookInfo={bookDescription} books={books} />
 
             <DivisionLine />
 
-            <h2 className={styles.infoHeader} id="Description">Book description</h2>
+            <h2 className={styles.infoHeader} id="Description">
+              Book description
+            </h2>
             <p>{bookDescription.description}</p>
 
             <DivisionLine />

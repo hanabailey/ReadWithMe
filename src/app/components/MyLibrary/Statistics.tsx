@@ -1,18 +1,73 @@
 import React from "react";
 import styles from "@/app/components/MyLibrary/Statistics.module.scss";
+import { object } from "prop-types";
+import { DateTime } from "luxon";
 
 const Statistics = (props) => {
-  const books = props.books;
-  console.log(books, "여기");
-  const endedBooks = [];
+  const books = props.books || [];
 
-  const reaidngEndDate = books.map((book, index) => {
-    if (book.reading_end_date !== null) {
-      console.log(book.reading_end_date);
-      endedBooks.push(book.books.img);
-      console.log(endedBooks);
-    }
+  //날짜관련은 luxon을 쓰는게 낫다
+  const finishedBooksByMonth:{[month: number]: {date: number, image: string}[]} = {};
+  books.forEach(book => {
+    if (!book.reading_end_date) return;
+    const readingEndDate = DateTime.fromISO(book.reading_end_date);
+    if (!DateTime.now().hasSame(readingEndDate, 'year')) return;
+
+    const month = readingEndDate.month;
+    const monthRecord = finishedBooksByMonth[month] || [];
+    monthRecord.push({date: readingEndDate.day, image: book.books.img});
+    finishedBooksByMonth[month] = monthRecord;
   });
+
+  console.log(finishedBooksByMonth);
+
+
+
+  // console.log(books, "여기");
+
+
+  // const endedBooks = [];
+ 
+  // const readingEndDate = books
+  //   .filter((book) => book.reading_end_date !== null)
+  //   .map((book) => {
+  //     const readingEndDt = DateTime.fromISO(book.reading_end_date);
+  //     return {
+  //       year: readingEndDt.year,
+  //       month: readingEndDt.month,
+  //       reading_end_date: book.reading_end_date,
+  //       image: book.books.img,
+  //     };
+  //   });
+  
+  // const separatedByYear = readingEndDate.reduce((result, item) => {
+  //   const year = item.year.toString();
+  //   if (!result[year]) {
+  //     result[year] = [];
+  //   }
+  //   result[year].push(item);
+  //   return result;
+  // }, {});
+  
+  // console.log(separatedByYear);
+
+  // const separatedByYearAndMonth = {};
+
+  // for (const year in separatedByYear) {
+  //   separatedByYearAndMonth[year] = separatedByYear[year].reduce((result, item) => {
+  //   const year = item.year.toString();
+  //   const month = item.month.toString();
+  //   if (!result[month]) {
+  //     result[month] = [];
+  //   }
+  //    result[month].push(item);
+  //   return result;
+  //   }, {});
+  // }
+
+
+  // console.log(separatedByYearAndMonth)
+
 
   return (
     <>
@@ -26,94 +81,98 @@ const Statistics = (props) => {
         </ul>
 
         <ul className={styles.axis_x}>
-          <li className={styles.item}>
-            {[1, 2, 3, 4, 5].reverse().map((content) => (
-              <div className={styles.bookImgBox} key={content}>
-                {content}
+        {finishedBooksByMonth[1]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
               </div>
-            ))}
+            })}
             <p>Jan</p>
-          </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
+          {finishedBooksByMonth[2]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Feb</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
+          {finishedBooksByMonth[3]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Mar</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[4]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Apr</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
+          {finishedBooksByMonth[5]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>May</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[6]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Jun</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[7]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Jul</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[8]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Aug</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+            {finishedBooksByMonth[9]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Sep</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[10]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Oct</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[11]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Nov</p>
           </li>
           <li className={styles.item}>
-            <div className={styles.bookImgBox}>1</div>
-            <div className={styles.bookImgBox}>2</div>
-            <div className={styles.bookImgBox}>3</div>
-            <div className={styles.bookImgBox}>4</div>
-            <div className={styles.bookImgBox}>5</div>
+          {finishedBooksByMonth[12]?.map(({date, image}) => {
+              return <div className={styles.bookImgBox} key={image}>
+                <img src={image} />
+              </div>
+            })}
             <p>Dec</p>
           </li>
         </ul>

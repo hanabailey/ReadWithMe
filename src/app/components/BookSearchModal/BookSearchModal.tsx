@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/app/components/BookSearchModal/BookSearchModal.module.scss";
 import Modal from "../UI/Modal";
-import { Select, ScrollArea} from "@mantine/core";
+import { Select, ScrollArea } from "@mantine/core";
+import { NativeSelect } from '@mantine/core';
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import ReadingStatus from "../BookDetail/ReadingStatus";
 
 interface BookSearchModalProps {
   img: string[];
@@ -12,10 +15,62 @@ interface BookSearchModalProps {
 
 function BookSearchModal(props: BookSearchModalProps) {
   const { img, selectedImageIndex, setIsModalOpen, selectedBookInfo } = props;
+  const supabase = createClientComponentClient();
+  const [readingStatus, setReadingStatus] = useState("");
+
+  console.log(selectedBookInfo);
 
   const closeBookDetailModal = (): void => {
     setIsModalOpen();
   };
+
+  const addBookToLibraryHandler = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { data, error } = await supabase.from("books").insert([
+      {
+        isbn: selectedBookInfo.isbn,
+        author: selectedBookInfo.author,
+        title: selectedBookInfo.title,
+        img: selectedBookInfo.image,
+        link: selectedBookInfo.link,
+        publisher: selectedBookInfo.publisher,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error updating book:", error);
+    } else {
+      console.log("Book updated successfully:", data);
+      // Close the modal or perform any other actions after successful update
+      closeBookDetailModal();
+    }
+
+
+  };
+
+  const readingStatusHandler =async (selectedOption)=>{
+  
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { data, error} = await supabase.from("user_books").upsert({reading_status: selectedOption,
+      user_id:user.id,
+      isbn:selectedBookInfo.isbn
+     })
+     console.log(user.id)
+   
+    
+      if (error) {
+        console.error("Reading status update error:", error);
+    } else {
+        console.log("Reading status updated successfully:", data);
+        setReadingStatus(selectedOption);
+    }
+  }
 
   return (
     <Modal
@@ -37,19 +92,23 @@ function BookSearchModal(props: BookSearchModalProps) {
             </ScrollArea>
 
             <Select
+              value={readingStatus}
               className={styles.select}
-              label="독서상태"
+              label="Reading status"
               placeholder="Pick one"
+              onChange={readingStatusHandler}
               data={[
-                { value: "읽고싶은", label: "읽고싶은" },
-                { value: "읽는 중", label: "읽는 중" },
-                { value: "읽음", label: "읽음" },
-                { value: "잠시멈춘", label: "잠시멈춘" },
-                { value: "중단", label: "중단" },
+                { value: "Want to read", label: "Want to read" },
+                { value: "Reading", label: "Reading" },
+                { value: "Done", label: "Done" },
+                { value: "pause", label: "pause" },
+                { value: "stop", label: "stop" },
               ]}
             />
 
-            <button className={styles.Button}>Add to My Library</button>
+            <button className={styles.Button} onClick={addBookToLibraryHandler}>
+              Add to My Library
+            </button>
             <button onClick={closeBookDetailModal} className={styles.Button}>
               Close
             </button>

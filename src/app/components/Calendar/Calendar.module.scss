@@ -67,7 +67,7 @@
         }
 
         .date-box {
-          padding: 1rem;
+          padding: 1rem 0.2rem 0.5rem;;
           height: calc($app-width / 7);
 
           border-left: $tracker-border;
@@ -88,4 +88,10 @@
       }
     }
   }
+}
+
+.bookImg{
+  width: 100%;
+  height: 80%;
+  padding-top: 20%;
 }

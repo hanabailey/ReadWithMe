@@ -29,7 +29,7 @@ function BookSearchModal(props: BookSearchModalProps) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const { data, error } = await supabase.from("books").insert([
+    const { data:bookData, error:bookError } = await supabase.from("books").upsert([
       {
         isbn: selectedBookInfo.isbn,
         author: selectedBookInfo.author,
@@ -40,10 +40,21 @@ function BookSearchModal(props: BookSearchModalProps) {
       },
     ]);
 
-    if (error) {
-      console.error("Error updating book:", error);
+    const { data: userBookData, error: userBookError } = await supabase
+      .from("user_books")
+      .upsert({
+        reading_status: readingStatus,
+        user_id: user.id,
+        isbn: selectedBookInfo.isbn,
+      });
+
+
+  
+
+    if (bookError) {
+      console.error("Error updating book:", bookError);
     } else {
-      console.log("Book updated successfully:", data);
+      console.log("Book updated successfully:", bookData);
       // Close the modal or perform any other actions after successful update
       closeBookDetailModal();
     }
@@ -53,23 +64,25 @@ function BookSearchModal(props: BookSearchModalProps) {
 
   const readingStatusHandler =async (selectedOption)=>{
   
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    setReadingStatus(selectedOption)
+    
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
 
-    const { data, error} = await supabase.from("user_books").upsert({reading_status: selectedOption,
-      user_id:user.id,
-      isbn:selectedBookInfo.isbn
-     })
-     console.log(user.id)
+    // const { data, error} = await supabase.from("user_books").upsert({reading_status: selectedOption,
+    //   user_id:user.id,
+    //   isbn:selectedBookInfo.isbn
+    //  })
+    //  console.log(user.id)
    
     
-      if (error) {
-        console.error("Reading status update error:", error);
-    } else {
-        console.log("Reading status updated successfully:", data);
-        setReadingStatus(selectedOption);
-    }
+    //   if (error) {
+    //     console.error("Reading status update error:", error);
+    // } else {
+    //     console.log("Reading status updated successfully:", data);
+    //     setReadingStatus(selectedOption);
+    // }
   }
 
   return (

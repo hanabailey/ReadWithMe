@@ -1,49 +1,42 @@
-'use client'
+"use client";
 
-import { createContext, useContext, useState, useEffect  } from "react"
+import { createContext, useContext, useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export const BookDetailContext = createContext<any>({
-    bookDetail: []
-})
+export const userBooksDetailContext = createContext([]);
 
+export const UserBooksDetailContextProvider = ({ children }) => {
+  const [userBookDetail, setUserBookDetail] = useState([]);
+  const supabase = createClientComponentClient();
 
-export const UserBookDetailContextProvider = ({children}) =>{
-    const [userBookDetail, setUserBookDetail]=useState([])
-    const supabase = createClientComponentClient();
+  useEffect(() => {
+    const fetchUserBookTable = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    useEffect(() => {
-        const fetchInitialRecommendation = async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-    
-          try {
-            const { data, error } = await supabase
-              .from("user_books")
-              .select()
-            //   .eq("isbn", bookIsbn)
-              .eq("user_id", user.id);
-    
-            if (error) {
-              console.error("Error fetching recommendation:", error);
-              setUserBookDetail(data)
-            } 
+      const { data, error } = await supabase
+        .from("user_books")
+        .select("*, books(*)")
+        .eq("user_id", user.id);
 
-          } catch (error) {
-            console.error("Error fetching recommendation:", error);
-          }
-        };
-    
-        fetchInitialRecommendation();
-      }, []);
-    
+      console.log(data, "컨텍스트");
+      if (error) {
+        console.error("Error fetching", error);
+      }
+      if (data) {
+        setUserBookDetail(data);
+      }
+    };
 
-    return(
-        <BookDetailContext.Provider value={userBookDetail}>
-            {children}
-        </BookDetailContext.Provider>
-    )
+    fetchUserBookTable();
+  }, [supabase]);
+
+  return (
+    <userBooksDetailContext.Provider value={userBookDetail}>
+      {children}
+    </userBooksDetailContext.Provider>
+  );
 };
 
-export const useGlobalContext =()=>useContext(BookDetailContext);
+export const useGlobalContext = () => useContext(userBooksDetailContext);
